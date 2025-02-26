@@ -1,6 +1,6 @@
 import streamlit as x
 import function as y
-
+x.set_page_config(layout="wide")
 todos=y.get_todos()
 def newtodo():
     todo=x.session_state['new'] +"\n"
