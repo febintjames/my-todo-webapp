@@ -1,5 +1,4 @@
-james t j
-laly mol m
-feba t james
-febin t james
-aksa t james
+python
+flask
+react
+power bi
