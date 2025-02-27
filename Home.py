@@ -1,24 +1,31 @@
-import streamlit as x
+import streamlit
 import function as y
-x.set_page_config(layout="wide")
+streamlit.set_page_config(layout="wide")
 todos=y.get_todos()
 def newtodo():
-    todo=x.session_state['new'] +"\n"
-    todos.append(todo)
-    y.write(todos)
+    todo = streamlit.session_state['new'] + "\n"
+    if todo:
+        if todo not in todos:
+            todos.append(todo)
+            y.write(todos)
+            streamlit.session_state['new']=''
+        else:
+            streamlit.warning("Item already exists!")
 
+def complete():
+    todo=y.get_todos()
+    for n ,i in enumerate (todo):
+        complted = streamlit.session_state[i]
+        if complted == True:
+            todos.pop(n)
+            y.write(todos)
 
-x.title(" To-Do App")
-x.subheader("This is my todo App.")
-x.write("This app is to increase your productivity")
-for n,i in enumerate(todos):
-    check=x.checkbox(i,key=i)
-    if check == True:
-        todos.pop(n)
-        y.write(todos)
+streamlit.title(" To-Do App")
+streamlit.subheader("This is my todo App.")
+streamlit.write("This app is to increase your productivity")
+for i in todos:
+    streamlit.checkbox(i,key=i)
 
+streamlit.text_input(label=" ",placeholder="Enter the new todo",key="new",on_change=newtodo)
+streamlit.button("Completed",key='com',on_click=complete)
 
-
-
-x.text_input(label=" ",placeholder="Enter the new todo",key="new",on_change=newtodo)
-x.button("Exit")
